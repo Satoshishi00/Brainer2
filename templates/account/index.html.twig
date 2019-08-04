@@ -1,0 +1,27 @@
+{%  extends 'base.html.twig' %}
+
+{% block title 'Brainer2' %}
+
+{% block body %}
+
+    <h1 class="mt-3 col-3">Mon compte</h1>
+
+    <div class="container mt-3 col-4">
+
+        <div class="form-group">
+            <a href="{{ path('account/edit') }}" class="btn btn-primary">Modifier</a>
+            <p>Pseudo : {{ user.username }}</p>
+            <p>Email  : {{ user.email }} </p>
+            <p>Photo : {{ user.getImageFile }}</p>
+            {% if user.nbClasses != 0 %}
+                <p>Vous faites parti de {{ user.nbClasses }} classes</p>
+            {% else %}
+                <p>Vous ne faites parti d'aucune classe</p>
+            {% endif %}
+            <p>Vous avez {{ user.points }} points</p>
+            <p>Vous avez créé {{ user.nbQCM }} QCM</p>
+            <p>Vous avez créé {{ user.nbFlashCards }} Flash Cards</p>
+        </div>
+
+    </div>
+{% endblock %}
