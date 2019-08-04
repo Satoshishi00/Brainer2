@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"username"}, message="Il existe déjà un compte avec ce nom d'utilisateur")
  * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet Email")
- * @Vich\Uploadable()
+
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -36,6 +36,7 @@ class User
     private $username;
 
     /**
+     * @var string The hashed password
      * @ORM\Column(type="string", length=255)
      */
     private $password;
@@ -84,7 +85,7 @@ class User
     /**
      * @ORM\Column(type="boolean")
      */
-    private $premium;
+    private $premium = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -95,6 +96,13 @@ class User
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    public function __construct()
+    {
+        $this->updated_at = new \DateTime('now');
+        $this->created_at = new \DateTime('now');
+    }
+
 
     public function getId(): ?int
     {
@@ -135,6 +143,36 @@ class User
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getNbClasses(): ?int
