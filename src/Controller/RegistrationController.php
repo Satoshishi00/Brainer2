@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Media;
 use App\Form\RegistrationFormType;
 use App\Security\StubAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,15 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->flush();
+
+
+            $media = new Media();
+            $media->setImageName(strtoupper($user->getUsername()[0]).'.png');
+            $media->setUpdatedAt(new \DateTime('now'));
+            //dd($user);
+            $media->setIdUser($user->getId());
+            $entityManager->persist($media);
             $entityManager->flush();
 
             // do anything else you need here, like send an email

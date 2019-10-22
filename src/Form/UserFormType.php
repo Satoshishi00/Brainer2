@@ -23,16 +23,15 @@ class UserFormType extends AbstractType
             ->add('plainPassword')
             ->add('points')
             ->add('premium')
-            ->add('imageName')
-            ->add('imageSize')
-            ->add('imageFile', VichImageType::class, [
+            //->add('imageName')
+            //->add('imageSize')
+            /*->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
                 'download_label' => '...',
                 'download_uri' => true,
                 'image_uri' => true,
-                'imagine_pattern' => 'my_thumb'
-            ]);
+            ]);*/
         ;
     }
 

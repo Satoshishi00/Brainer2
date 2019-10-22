@@ -9,10 +9,13 @@
     <div class="container mt-3 col-4">
 
         <div class="form-group">
+            <a href="{{ path('account/edit/image') }}" class="btn">
+                <img src="/images/medias/{{ user.getImage.getImageName }}" height="200px" width="200px"><br/>
+            </a><br/>
             <a href="{{ path('account/edit') }}" class="btn btn-primary">Modifier</a>
             <p>Pseudo : {{ user.username }}</p>
             <p>Email  : {{ user.email }} </p>
-            <p>Photo : {{ user.getImageFile }}</p>
+
             {% if user.nbClasses != 0 %}
                 <p>Vous faites parti de {{ user.nbClasses }} classes</p>
             {% else %}

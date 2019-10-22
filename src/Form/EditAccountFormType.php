@@ -16,15 +16,15 @@ class EditAccountFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add('email', EmailType::class)
-            //->add('username', TextType::class)
-            ->add('imageFile', VichImageType::class, [
+            ->add('email', EmailType::class)
+            ->add('username', TextType::class)
+            /*->add('image_file', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
                 'download_label' => 'image',
                 'download_uri' => true,
                 'image_uri' => true
-            ]);
+            ]);*/
         ;
     }
 

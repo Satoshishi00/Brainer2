@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"username"}, message="Il existe déjà un compte avec ce nom d'utilisateur")
  * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet Email")
- * @Vich\Uploadable()
+ *
  */
 class User implements UserInterface
 {
@@ -72,21 +72,21 @@ class User implements UserInterface
      */
     private $points = 0;
 
-    /**
+    /*/**
      * @Vich\UploadableField(mapping="medias", fileNameProperty="imageName", size="imageSize")
      *
      */
-    private $imageFile;
+    //private $imageFile;
 
-    /**
+    /*/**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $image_name;
+    //private $imageName;
 
-    /**
+    /*/**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $image_size;
+    //private $imageSize;
 
     /**
      * @ORM\Column(type="boolean")
@@ -102,6 +102,11 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Media", mappedBy="id_user", cascade={"persist", "remove"})
+     */
+    private $image;
 
     public function __construct()
     {
@@ -241,7 +246,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
+    /*/**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -252,7 +257,7 @@ class User implements UserInterface
      * @return User
      * @throws \Exception
      */
-    public function setImageFile(?File $imageFile = null): void
+    /*public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
 
@@ -268,29 +273,30 @@ class User implements UserInterface
         return $this->imageFile;
     }
 
+
     public function getImageName(): ?string
     {
-        return $this->image_name;
+        return $this->imageName;
     }
 
-    public function setImageName(?string $image_name): self
+    public function setImageName(?string $imageName): self
     {
-        $this->image_name = $image_name;
+        $this->imageName = $imageName ;
 
         return $this;
     }
 
     public function getImageSize(): ?int
     {
-        return $this->image_size;
+        return $this->imageSize;
     }
 
-    public function setImageSize(?int $image_size): self
+    public function setImageSize(?int $imageSize): self
     {
-        $this->image_size = $image_size;
+        $this->imageSize = $imageSize;
 
         return $this;
-    }
+    }*/
 
     public function getPremium(): ?bool
     {
@@ -343,5 +349,22 @@ class User implements UserInterface
         }
 
         return true;
+    }
+
+    public function getImage(): ?Media
+    {
+        return $this->image;
+    }
+
+    public function setImage(Media $image): self
+    {
+        $this->image = $image;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $image->getIdUser()) {
+            $image->setIdUser($this);
+        }
+
+        return $this;
     }
 }
